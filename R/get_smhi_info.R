@@ -13,7 +13,7 @@
 #' 
 get_smhi_info <- function(xml_document, namespace, namespace_num, children){
   
-  xml_find_all(
+  xml2::xml_find_all(
     xml_document, 
     paste0(".//",names(namespace)[namespace_num],":",children), 
     namespace) %>% 
