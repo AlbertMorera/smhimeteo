@@ -17,5 +17,5 @@ get_smhi_info <- function(xml_document, namespace, namespace_num, children){
     xml_document, 
     paste0(".//",names(namespace)[namespace_num],":",children), 
     namespace) %>% 
-    xml_text()
+    xml2::xml_text()
 }
