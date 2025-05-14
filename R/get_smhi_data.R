@@ -69,12 +69,19 @@ get_smhi_data <- function(station_key, parameter_key, period_name, verbose = T) 
       position <- which(str_detect(names_columns, "Kvalitet"))
       
       meteo_data <- data_split[c((cr+1):length(data_split))]
+      ###############
+      #meteo_data <- 
+      #  meteo_data[1:max(
+      #    which(lapply(meteo_data, function(x) x[1] %>% nchar) %>% 
+      #            unlist != 0), na.rm = T)]
       
-      meteo_data <- 
-        meteo_data[1:max(
-          which(lapply(meteo_data, function(x) x[1] %>% nchar) %>% 
-                  unlist != 0), na.rm = T)]
-      
+      non_empty_rows <- which(sapply(meteo_data, function(x) nchar(x[1])) != 0)
+      if (length(non_empty_rows) == 0) {
+        warning(glue::glue("No data returned for station `{station}`, parameter `{par}`"))
+        next
+      }
+      meteo_data <- meteo_data[1:max(non_empty_rows)]
+      ###############
       meteo_data <- as.data.frame(do.call(rbind, lapply(meteo_data, function(x) {x[1:position]})), 
                                   stringsAsFactors = FALSE)
       
