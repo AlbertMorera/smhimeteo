@@ -126,7 +126,7 @@ get_smhi_data <- function(station_key, parameter_key, period_name, verbose = T) 
   }
   
   if (length(all_data) == 0 & period_name == "latest-hour") {
-    warning(glue::glue("No data available yet for station `{station}` and parameter `{par}`"))
+    break
   }
   
   all_data <- dplyr::bind_rows(all_data)
