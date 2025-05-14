@@ -54,7 +54,7 @@ get_smhi_closest <- function(points, parameter_key, period_name, verbose = TRUE,
   if (is.null(results)) return(NULL)
   
   results <-
-    result %>%
+    results %>%
     dplyr::mutate(quality = dplyr::case_when(quality == "" ~ NA_character_,
                                              TRUE ~ quality)) %>%
     dplyr::select(-geometry)
