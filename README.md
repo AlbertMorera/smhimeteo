@@ -31,7 +31,7 @@ This function returns a data frame with all available meteorological parameters,
 ### 2. List stations for a given parameter
 
 ```r
-get_smhi_station("1")
+get_smhi_station(parameter_key = "1")
 ```
 
 Replace `"1"` with the key of the parameter you are interested in (e.g., temperature).
@@ -39,7 +39,7 @@ Replace `"1"` with the key of the parameter you are interested in (e.g., tempera
 ### 3. List available time periods for a station and parameter
 
 ```r
-get_smhi_period("188790", "1")
+get_smhi_period(station_key = "188790", parameter_key = "1")
 ```
 
 This returns the available time resolutions (e.g., daily, hourly, monthly) for the specified station (`"188790"`) and parameter (`"1"`).
@@ -74,7 +74,7 @@ point <- st_as_sf(
 ### 2. Find the closest stations for specific parameters and a given point
 
 ```r
-get_closest_stations(point, c("1", "5"), "latest-months", n = 3)
+get_closest_stations(points = point, parameter_key = c("1", "5"), period_name = "latest-months", n = 3)
 ```
 
 This function finds the 3 closest stations for parameters "1" and "5" (e.g., temperature and precipitation) based on the spatial coordinates of the point.
@@ -82,7 +82,7 @@ This function finds the 3 closest stations for parameters "1" and "5" (e.g., tem
 ### 3. Get the closest station using `get_smhi_closest()`
 
 ```r
-get_smhi_closest(point, "1", "latest-months", verbose = TRUE, n = 1, max_radius = 100)
+get_smhi_closest(points = point, parameter_key = "1", period_name = "latest-months", verbose = TRUE, n = 1, max_radius = 100)
 ```
 
 This retrieves the closest station for parameter "1" (e.g., temperature) within a 100 km radius.
