@@ -42,9 +42,8 @@ get_closest_stations <- function(points, parameter_key, period_name, max_radius 
       stations_smhi %>%
       dplyr::filter(parameter_id %in% parameter_key) %>%
       sf::st_as_sf(coords = c("longitude", "latitude"), crs = sf::st_crs(4326)) %>%
-      dplyr::mutate(distance.km = sf::st_distance(geometry, sf::st_transform(pt, sf::st_crs(4326))) %>% as.numeric()
-                    , distance.km = distance.km / 1000
-      ) %>%
+      dplyr::mutate(distance.km = sf::st_distance(geometry, sf::st_transform(pt, sf::st_crs(4326))) %>% as.numeric(), 
+                    distance.km = distance.km / 1000) %>%
       dplyr::filter(distance.km <= max_radius) %>%
       dplyr::mutate(periods = purrr::map2(station_id, parameter_id, ~ get_smhi_period(parameter_key = .y, .x))) %>%
       dplyr::filter(map_lgl(periods, ~ period_name %in% .x))
