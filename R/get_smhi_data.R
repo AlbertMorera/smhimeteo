@@ -70,9 +70,10 @@ get_smhi_data <- function(station_key, parameter_key, period_name, verbose = T) 
       
       meteo_data <- data_split[c((cr+1):length(data_split))]
       
-      meteo_data <- meteo_data[1:max(which(lapply(meteo_data, 
-                                                  function(x) x[1] %>% nchar) %>% 
-                                             unlist != 0))]
+      meteo_data <- 
+        meteo_data[1:max(
+          which(lapply(meteo_data, function(x) x[1] %>% nchar) %>% 
+                  unlist != 0), na.rm = T)]
       
       meteo_data <- as.data.frame(do.call(rbind, lapply(meteo_data, function(x) {x[1:position]})), 
                                   stringsAsFactors = FALSE)
