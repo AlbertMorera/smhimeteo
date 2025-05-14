@@ -73,7 +73,7 @@ get_smhi_data <- function(station_key, parameter_key, period_name, verbose = T) 
       non_empty_rows <- which(sapply(meteo_data, function(x) nchar(x[1])) != 0)
       
       if (length(non_empty_rows) == 0) {
-        warning(glue::glue("No data returned for station `{station}`, parameter `{par}`"))
+        warning(glue::glue("No data returned for station `{station}` and parameter `{par}`"))
         next
       }
       
@@ -126,11 +126,7 @@ get_smhi_data <- function(station_key, parameter_key, period_name, verbose = T) 
   }
   
   if (length(all_data) == 0 & period_name == "latest-hour") {
-    rlang::abort(
-      message = glue::glue("Data is not available yet."),
-      class = "no_data_available",
-      parameter = all_data
-    )
+    warning(glue::glue("No data available yet for station `{station}` and parameter `{par}`"))
   }
   
   all_data <- dplyr::bind_rows(all_data)
